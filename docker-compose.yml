@@ -1,0 +1,15 @@
+services:
+  compare:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - compare-data:/app/data
+    environment:
+      - PORT=8080
+      - DATA_DIR=/app/data
+      - JWT_SECRET=${JWT_SECRET:-}
+    restart: unless-stopped
+
+volumes:
+  compare-data:

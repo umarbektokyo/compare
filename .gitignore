@@ -1,0 +1,19 @@
+# Binaries
+backend/compare-server
+
+# Data
+*.db
+*.db-shm
+*.db-wal
+jwt_secret
+
+# Frontend build artifacts
+frontend/node_modules/
+frontend/build/
+frontend/.svelte-kit/
+
+# Environment
+.env
+
+# OS
+.DS_Store
