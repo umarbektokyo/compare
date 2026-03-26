@@ -12,10 +12,20 @@
 	let password = $state('');
 	let authError = $state('');
 	let authLoading = $state(false);
+	let emailHint = $state('');
 
 	onMount(() => {
 		auth.init();
 	});
+
+	function handleUsernameInput() {
+		if (username.includes('@')) {
+			username = username.split('@')[0];
+			emailHint = 'Just a username is needed — email removed for privacy';
+		} else {
+			emailHint = '';
+		}
+	}
 
 	async function handleAuth(e: Event) {
 		e.preventDefault();
@@ -69,7 +79,10 @@
 				</div>
 
 				<form class="auth-form" onsubmit={handleAuth}>
-					<input class="input" type="text" placeholder="Username" bind:value={username} autocomplete="username" />
+					<input class="input" type="text" placeholder="Username" bind:value={username} oninput={handleUsernameInput} autocomplete="username" />
+					{#if emailHint}
+						<p class="email-hint">{emailHint}</p>
+					{/if}
 					<input class="input" type="password" placeholder="Password" bind:value={password} autocomplete={authMode === 'register' ? 'new-password' : 'current-password'} />
 					{#if authError}
 						<p class="auth-error">{authError}</p>
@@ -210,6 +223,11 @@
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
+	}
+	.email-hint {
+		color: var(--link);
+		font-size: 12px;
+		margin-top: -4px;
 	}
 	.auth-error {
 		color: var(--red);

@@ -78,6 +78,9 @@ func handleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 
 	body.Username = strings.TrimSpace(body.Username)
+	if at := strings.Index(body.Username, "@"); at > 0 {
+		body.Username = body.Username[:at]
+	}
 	if len(body.Username) < 2 || len(body.Username) > 30 {
 		jsonError(w, "username must be 2-30 characters", http.StatusBadRequest)
 		return
